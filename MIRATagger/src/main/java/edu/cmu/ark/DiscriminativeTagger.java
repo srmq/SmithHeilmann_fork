@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -20,7 +21,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
-import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 import edu.stanford.nlp.io.IOUtils;
@@ -51,14 +51,22 @@ public class DiscriminativeTagger implements Serializable {
      */
     public static List<String> loadLabelList(String labelFile) {
         List<String> res = new ArrayList<String>();
+        BufferedReader br = null;
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(labelFile)));
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(labelFile)));
             String buf;
             while ((buf = br.readLine()) != null) {
                 res.add(buf);
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+        	if (br != null)
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
         }
         return res;
     }
@@ -78,8 +86,9 @@ public class DiscriminativeTagger implements Serializable {
     public static List<LabeledSentence> loadSuperSenseData(String path, List<String> labels) {
         List<LabeledSentence> res = new ArrayList<LabeledSentence>();
 
+        BufferedReader br = null;
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
             String buf;
             String[] parts;
             LabeledSentence sent = new LabeledSentence();
@@ -105,6 +114,13 @@ public class DiscriminativeTagger implements Serializable {
 
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+        	if (br != null)
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
         }
 
         return res;
@@ -922,6 +938,17 @@ public class DiscriminativeTagger implements Serializable {
             loadProperties("tagger.properties");
         }
         return properties;
+    }
+    
+    public static Properties loadProperties(InputStream propertiesStream) {
+    	properties = new Properties();
+    	try {
+			properties.load(propertiesStream);
+		} catch (IOException e) {
+			e.printStackTrace();
+            System.exit(0);
+		}
+    	return properties;
     }
 
     public static Properties loadProperties(String propertiesFile) {

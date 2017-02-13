@@ -62,7 +62,7 @@ public class SuperSenseTaggerClient {
                     String[] taggedTokens = tagged.split("\\s");
                     int idx;
                     for (int i = 0; i < taggedTokens.length; i++) {
-                        idx = taggedTokens[i].lastIndexOf('_');
+                        idx = taggedTokens[i].lastIndexOf('/');
                         String token = taggedTokens[i].substring(0, idx);
                         String pos = taggedTokens[i].substring(idx + 1);
                         input += token + "\t" + pos + "\n";

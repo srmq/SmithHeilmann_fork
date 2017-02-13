@@ -2,7 +2,11 @@ package edu.cmu.ark;
 
 import java.util.*;
 import java.util.zip.GZIPInputStream;
+
+import edu.stanford.nlp.io.IOUtils;
+
 import java.io.*;
+import java.net.URL;
 
 import net.didion.jwnl.JWNL;
 import net.didion.jwnl.data.IndexWord;
@@ -554,11 +558,10 @@ public class SuperSenseFeatureExtractor {
 		senseMap = new HashMap<String, Map<String, String>>();
 		senseCountMap = new HashMap<String, Map<String, Integer>>();
 		
-
-		String nounFile = ClassLoader.getSystemResource(props.getProperty("nounFile","data/oldgaz/NOUNS_WS_SS_P.gz")).getFile();
+		String nounFile = props.getProperty("nounFile","data/oldgaz/NOUNS_WS_SS_P.gz");;
 		loadSenseFileOriginalFormat(nounFile, "N");
 		
-		String verbFile = ClassLoader.getSystemResource(props.getProperty("verbFile","data/oldgaz/VERBS_WS_SS.gz")).getFile();
+		String verbFile = props.getProperty("verbFile","data/oldgaz/VERBS_WS_SS.gz");
 		loadSenseFileOriginalFormat(verbFile, "V");
 
 		System.err.println("done.");
