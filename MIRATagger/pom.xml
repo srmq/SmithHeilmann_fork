@@ -2,15 +2,59 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>SupersenseTagger</groupId>
-	<artifactId>SupersenseTagger</artifactId>
+	<groupId>br.cin.ufpe.nlp</groupId>
+	<artifactId>supersense-tagger</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
+	<name>SupersenseTagger</name>
+	<url>https://github.com/srmq/SmithHeilmann_fork/tree/master/MIRATagger</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<licenses>
+		<license>
+			<name>GNU General Public License, Version 2 or later</name>
+			<url>http://www.gnu.org/licenses/gpl-2.0.html</url>
+			<distribution>manual</distribution>
+			<comments>A free, strong copyleft license for software and other kinds of works</comments>
+		</license>
+	</licenses>
+
+
 	<repositories>
+		<!-- Local solution to get stanford-postagger from git cloned project <repository> 
+			<id>supersensetagger-local-repo</id> <url>file:///${project.basedir}/lib</url> 
+			</repository> -->
 		<repository>
-			<id>supersensetagger-local-repo</id>
-			<url>file:///${project.basedir}/lib</url>
+			<releases>
+				<enabled>true</enabled>
+				<checksumPolicy>warn</checksumPolicy>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>fail</checksumPolicy>
+			</snapshots>
+			<id>srmq-maven-repo</id>
+			<name>SRMQ's development repository</name>
+			<url>https://srmq-maven-repo.appspot.com</url>
+			<layout>default</layout>
 		</repository>
 	</repositories>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<uniqueVersion>false</uniqueVersion>
+			<id>srmq-maven-repo</id>
+			<name>SRMQ's development repository</name>
+			<url>https://srmq-maven-repo.appspot.com</url>
+			<layout>default</layout>
+		</snapshotRepository>
+	</distributionManagement>
+
+
 	<dependencies>
 		<dependency>
 			<groupId>commons-logging</groupId>
